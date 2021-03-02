@@ -1,17 +1,20 @@
 package com.groupProject.groupProject.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "role_table")
-@Data
-public class RoleEntity {
+@Table(name = "roles")
+@NoArgsConstructor
+@AllArgsConstructor
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column
     private String name;

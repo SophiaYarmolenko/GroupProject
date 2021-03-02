@@ -1,9 +1,8 @@
 package com.groupProject.groupProject.Service;
 
 import com.groupProject.groupProject.exception.UserAlreadyExistException;
-import com.groupProject.groupProject.model.RoleEntity;
 import com.groupProject.groupProject.model.User;
-import com.groupProject.groupProject.repo.RoleEntityRepository;
+import com.groupProject.groupProject.repo.RoleRepository;
 import com.groupProject.groupProject.repo.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RoleEntityRepository roleEntityRepository;
+    private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 

@@ -5,6 +5,7 @@ import com.groupProject.groupProject.model.User;
 import com.groupProject.groupProject.Config.JwtProvider;
 import com.groupProject.groupProject.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,24 +15,25 @@ import javax.validation.Valid;
 
 @RestController
 public class AuthController {
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private JwtProvider jwtProvider;
 
-
-
     @RequestMapping(value="/register", method=RequestMethod.GET)
     public ModelAndView registration (@ModelAttribute("request")  RegistrationRequest request) {
-        System.out.println("register");
         return new ModelAndView("register","reguest",request);
     }
+
     @RequestMapping(value="/auth", method=RequestMethod.GET)
     public ModelAndView login () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
     }
+
     @PostMapping("/register")
     public ModelAndView registerUser(@Valid @ModelAttribute("request")  RegistrationRequest request, BindingResult bindingResult) {
         User u = new User();
@@ -62,7 +64,7 @@ public class AuthController {
             return new ModelAndView("errorpage","message", "There are no account for that username/email  exists.");
         }
         String token = jwtProvider.generateToken(u.getEmail());
-        return new ModelAndView("home", "user",u);
+        return new ModelAndView("redirect:smartCourse/userMain/" + u.getId(), "user",u);
 
     }
 }
