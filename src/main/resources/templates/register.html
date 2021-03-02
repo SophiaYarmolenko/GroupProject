@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns="http://www.w3.org/1999/html" >
+<head>
+    <title> Registration </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"  th:href="@{css/registerStyle.css}"/>
+</head>
+<body>
+<form  th:action="@{/register}" th:object="${request}"  th:method="POST">
+    <div class="App">
+        <div class="login">
+            <div class="container">
+                <div class="base-container">
+                    <div class="header">Register</div>
+                    <div class="content">
+                        <div class="image">
+                            <img th:src="@{css/login.svg}"/>
+                        </div>
+                        <div class="form">
+                            <div class="form-group">
+                                <label th:for="name">Name</label>
+                                <input type="text" th:field="*{name}" th:name="name" placeholder="name"/>
+                            </div>
+                            <div style="color:#ff0000" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+                            <div class="form-group">
+                                <label th:for="surname">Surname</label>
+                                <input type="text" th:field="*{surname}" id="surname" placeholder="surname"/>
+
+                            </div>
+                            <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname Error</div>
+                            <div class="form-group">
+                                <label th:for="email">Email</label>
+                                <input type="text" th:field="*{email}" id="email"  placeholder="email"/>
+                            </div>
+                            <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+
+                            <div class="form-group">
+                                <label th:for="password">Password</label>
+                                <input type="text" th:field="*{password}" id="password"  placeholder="password"/>
+                            </div>
+                            <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <button type="submit" class="btn">
+                            Register
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+
