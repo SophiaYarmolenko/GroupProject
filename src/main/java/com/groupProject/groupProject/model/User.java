@@ -30,6 +30,19 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ToDoItem> toDoItems = new ArrayList<>();
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Course> courses = new ArrayList<>();
+
+    public void addCourse(Course course) {
+        courses.add( course );
+        course.getUsers().add( this );
+    }
+
+    public void removeCourse(Course course) {
+        courses.remove( course);
+        course.getUsers().remove( this );
+    }
 }

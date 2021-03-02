@@ -21,6 +21,9 @@ public class ToDoItem {
     private String title;
 
     @Column(name = "done")
-    private boolean done;
+    private Boolean done;
+
+    @ManyToOne
+    private User user;
 
 }
