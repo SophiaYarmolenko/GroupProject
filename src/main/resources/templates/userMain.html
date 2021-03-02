@@ -10,11 +10,10 @@
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <h5 class="my-0 mr-md-auto font-weight-normal">SmartCourse</h5>
         <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" th:href="${create}">Create course</a>
             <a class="p-2 text-dark" href="/">About</a>
             <a class="p-2 text-dark" href="/smartCourse">Main</a>
         </nav>
-        <a class="btn btn-outline-primary" href="/signup">Sign up</a>
-        <a class="btn btn-outline-primary" href="/signin">Sign in</a>
     </div>
     <header>
         <div class="collapse bg-dark" id="navbarHeader">
@@ -27,7 +26,6 @@
         </div>
     </header>
 </div>
-
 <main role="main">
 
     <section class="jumbotron text-center">
@@ -40,59 +38,31 @@
             </p>
         </div>
     </section>
+    <div class="bg-dark shadow-sm align-items-center">
+        <div class="container align-items-center">
+                <strong class="text-white">Check your toDoList:</strong>
+                <div th:each="notDoneToDoItemElement : ${notDoneToDoItems}" class="form-check-text-align-center">
+                    <li><a align-items-center>
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <h class="form-check-label text-white " for="flexCheckDefault"
+                           th:text="${notDoneToDoItemElement.title}"
+                        />
+                    </a></li>
 
-    <div class="album py-5 bg-light">
-        <div class="container">
+                </div>
 
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Interesting</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Something interesting</text></svg>
-                        <div class="card-body">
-                            <!--/*@thymesVar id="articleName1" type=""*/-->
-                            <p class="card-text" th:text="${articleName1}" />
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-secondary" href="/wikiArticle/1">View</a>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
+                <div th:each="doneToDoItemElement : ${doneToDoItems}" class="form-check-text-align-center">
+                    <li><a align-items-center>
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <h class="form-check-label text-white" for="flexCheckChecked"
+                           th:text="${doneToDoItemElement.title}"
+                    />
+                    </a></li>
                 </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Interesting</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Something interesting</text></svg>
-                        <div class="card-body">
-                            <!--/*@thymesVar id="articleName2" type=""*/-->
-                            <p class="card-text" th:text="${articleName2}" />
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-secondary" href="/wikiArticle/2">View</a>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Interesting</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Something interesting</text></svg>
-                        <div class="card-body">
-                            <!--/*@thymesVar id="articleName3" type=""*/-->
-                            <p class="card-text" th:text="${articleName3}" />
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-secondary" href="/wikiArticle/3">View</a>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+
+
 
 </main>
 <div
