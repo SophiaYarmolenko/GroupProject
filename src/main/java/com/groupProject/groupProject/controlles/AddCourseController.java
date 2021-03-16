@@ -43,7 +43,7 @@ public class AddCourseController
     }
 
     @PostMapping("*/userMain/{userId}/createCourse")
-    public String blogPostAdd
+    public String courseCreate
             (
                     @PathVariable(value = "userId") long userId,
                     @RequestParam String name,
@@ -53,8 +53,6 @@ public class AddCourseController
         Course course = new Course(name);
         User user = userRepository.findById(userId).get();
         courseRepository.save(course);
-
-        //model.addAttribute("add", userId+"/createCourse");
 
         return "redirect:/coursePage/"+course.getId();
     }
