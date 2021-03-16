@@ -13,8 +13,9 @@ public class RegistrationRequest {
     private String email;
 
     @NotEmpty(message = "Password cannot be empty")
-    @Min(value = 7, message
-            = "Password must be not less than 7")
+    @Pattern(   regexp = "^$|^(?=.*[0-9])(?=.*[a-z]).{8,2000}$",message = "The password must contain at least one " +
+            "lowercase character," +
+            "  one digit and a length between 8 to 2000")
     private String password;
     @NotNull(message = "Name cannot be null")
     @NotEmpty(message = "Name cannot be empty")

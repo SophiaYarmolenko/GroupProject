@@ -52,7 +52,7 @@ public class AuthController {
         } catch (UserAlreadyExistException uaeEx) {
             return new ModelAndView("errorpage","message", "An account for that username/email already exists.");
         }
-        return  new ModelAndView("home", "user",u);
+        return  new ModelAndView("redirect:smartCourse/userMain/" + u.getId(), "user",u);
     }
 
 
