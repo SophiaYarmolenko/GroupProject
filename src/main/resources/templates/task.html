@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${courseName}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css">
+    <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.css">
+    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.css">
+    <link rel="stylesheet" href="https://bootswatch.com/_assets/css/custom.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+
+    <style>
+        #center {
+            margin: auto;
+            width: 1136px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<header
+        th:insert="header :: header">
+</header>
+<div class="jumbotron text-center">
+    <h2 th:text="${courseName}"/>
+</div>
+
+
+<div class="container mt-5 mb-5">
+    <h1> Create task</h1>
+    <form th:action="'/course/'+${courseId}+'/taskAdd'" method="post" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Enter title" class="form-control"><br>
+        <textarea name="task" placeholder="Enter task's text" class="form-control"></textarea><br>
+        <div class="form-group">
+            <label for="dtpickerdemo" >Deadline:</label>
+            <div class='col-sm-4 input-group date ' id='dtpickerdemo'>
+                <input type='text' name="date" class="form-control " />
+                <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>File input</label>
+            <input type="file" class="form-control-file" name="exampleInputFile" aria-describedby="fileHelp">
+            <input type="file" class="form-control-file" name="exampleInputFile1" aria-describedby="fileHelp">
+            <input type="file" class="form-control-file" name="exampleInputFile2" aria-describedby="fileHelp">
+        </div>
+        <button type="submit" class="btn btn-secondary">Add task</button>
+    </form>
+
+</div>
+
+<div th:each="el :${tasks}" class="card text-white bg-dark mb-3" id="center">
+    <h4 style="text-align: right" th:text="${el.time}"/>
+    <h1 class="display-3" th:text="${el.title}"/>
+    <hr class="my-4">
+    <form th:action="'/course/'+${courseId} +'/task/'+${el.id}+'/delete'" method="post">
+    <div class="row">
+        <div class="col-lg-7">
+        <p class="lead">
+            <a class="btn btn-secondary" th:href="'/course/'+${courseId} +'/task/'+${el.id}+'/responses'" role="button">Responses</a>
+            <a class="btn btn-secondary" th:href="'/course/'+${courseId} +'/task/'+${el.id}+'/edit'" role="button">Edit</a>
+            <button class="btn btn-warning" type="submit">Delete</button>
+
+        </p>
+        </div>
+    </div>
+    </form>
+</div>
+
+<div
+        th:insert="footer :: footer">
+</div>
+<!-- Инициализация виджета "Bootstrap datetimepicker" -->
+
+<script type="text/javascript">
+    $(function () {
+        $('#dtpickerdemo').datetimepicker();
+    });
+</script>
+</body>
+</html>

@@ -32,10 +32,26 @@ public class Course
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Document> documents = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
     //Getters and setters are omitted for brevity
     public void addPost(Post post) {
         posts.add( post );
         post.setCourses( this );
+    }
+    public void removePost(Post post) {
+        posts.remove( post );
+        post.setCourses( null );
+    }
+
+    public void addTask(Task task) {
+        tasks.add( task );
+        task.setCourse( this );
+    }
+    public void removeTask(Task task) {
+        tasks.remove( task );
+        task.setCourse( null );
     }
 
     public void removeDocument(Document document) {
@@ -47,8 +63,4 @@ public class Course
         document.setCourse( this );
     }
 
-    public void removePost(Post post) {
-        posts.remove( post );
-        post.setCourses( null );
-    }
 }

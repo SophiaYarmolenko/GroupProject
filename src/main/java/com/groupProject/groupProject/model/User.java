@@ -45,4 +45,28 @@ public class User {
         courses.remove( course);
         course.getUsers().remove( this );
     }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Document> documents = new ArrayList<>();
+
+
+    public void removeDocument(Document document) {
+        documents.remove( document );
+        document.setUser( null );
+    }
+    public void addDocument(Document document) {
+        documents.add( document );
+        document.setUser( this );
+    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment>  comments = new ArrayList<>();
+
+
+    public void removeComment(Comment comment) {
+        comments.remove( comment );
+        comment.setUser( null );
+    }
+    public void addComment(Comment comment) {
+        comments.add( comment );
+        comment.setUser( this );
+    }
 }

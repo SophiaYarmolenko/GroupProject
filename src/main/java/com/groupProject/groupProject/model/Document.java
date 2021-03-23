@@ -28,4 +28,8 @@ public class Document {
     private Post post;
     @ManyToOne
     private Course course;
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Task task;
 }
