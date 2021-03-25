@@ -9,11 +9,11 @@ public class RegistrationRequest {
 
     @NotEmpty(message = "Email cannot be empty")
     @Email(message = "Email should be valid")
-    @Pattern(regexp = "^$|^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(knu)\\.ua$",message = "Not knu user")
+    @Pattern(regexp = "^$|^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(knu)\\.ua$", message = "Not knu user")
     private String email;
 
     @NotEmpty(message = "Password cannot be empty")
-    @Pattern(   regexp = "^$|^(?=.*[0-9])(?=.*[a-z]).{8,2000}$",message = "The password must contain at least one " +
+    @Pattern(regexp = "^$|^(?=.*[0-9])(?=.*[a-z]).{8,2000}$", message = "The password must contain at least one " +
             "lowercase character," +
             "  one digit and a length between 8 to 2000")
     private String password;

@@ -3,6 +3,8 @@ package com.groupProject.groupProject.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +20,10 @@ public class Role {
 
     @Column
     private String name;
+
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "roles")
+    private List<Course> courses = new ArrayList<>();
 }

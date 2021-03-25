@@ -36,14 +36,17 @@ public class User {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Course> courses = new ArrayList<>();
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Role> roles = new ArrayList<>();
+
     public void addCourse(Course course) {
-        courses.add( course );
-        course.getUsers().add( this );
+        courses.add(course);
+        course.getUsers().add(this);
     }
 
     public void removeCourse(Course course) {
-        courses.remove( course);
-        course.getUsers().remove( this );
+        courses.remove(course);
+        course.getUsers().remove(this);
     }
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Document> documents = new ArrayList<>();
