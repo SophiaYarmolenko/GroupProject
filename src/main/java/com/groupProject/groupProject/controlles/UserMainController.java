@@ -15,8 +15,7 @@ import java.util.stream.Collectors;
 
 
 @Controller
-public class UserMainController
-{
+public class UserMainController {
     @Autowired
     private UserRepository userRepository;
 
@@ -24,19 +23,16 @@ public class UserMainController
     private ToDoItemRepository toDoItemRepository;
 
     @GetMapping("*/userMain/{userId}")
-    public String userMain(@PathVariable(value = "userId") long userId, Model model)
-    {
-        if(!userRepository.existsById(userId))
-        {
+    public String userMain(@PathVariable(value = "userId") long userId, Model model) {
+        if (!userRepository.existsById(userId)) {
             return "redirect:";
         }
         User user = userRepository.findById(userId).get();
         model.addAttribute("greeting", "Hi, " + user.getName() + ", welcome back!");
         model.addAttribute("title", "SmartCourse");
-        model.addAttribute("create", userId+"/createCourse");
+        model.addAttribute("create", userId + "/createCourse");
 
-        if( toDoItemRepository.existsByUser(user) )
-        {
+        if (toDoItemRepository.existsByUser(user)) {
             List<ToDoItem> doneToDoItems = toDoItemRepository.findAllByUser(user)
                     .stream()
                     .filter(i -> i.getDone() == true)
@@ -52,7 +48,6 @@ public class UserMainController
         }
         return "userMain";
     }
-
 
 
 }

@@ -29,27 +29,26 @@ public class PostsController {
     private PostRepository postRepository;
     @Autowired
     private DocumentRepository docRep;
+
     @GetMapping("/post/{courseId}/{id}")
-    public String BlogDetails(@PathVariable(value = "id")long id,@PathVariable(value = "courseId")long courseId, Model model)
-    {
-        if(!postRepository.existsById(id))
-        {
-            return "redirect:/coursePage/"+courseId;
+    public String BlogDetails(@PathVariable(value = "id") long id, @PathVariable(value = "courseId") long courseId, Model model) {
+        if (!postRepository.existsById(id)) {
+            return "redirect:/coursePage/" + courseId;
         }
-        Optional<Post> post=postRepository.findById(id);
-        ArrayList<Post> res= new ArrayList<>();
+        Optional<Post> post = postRepository.findById(id);
+        ArrayList<Post> res = new ArrayList<>();
         post.ifPresent(res::add);
         Post post1 = postRepository.findById(id).get();
-        Iterable <Document> docs= post1.getDocuments();
-        model.addAttribute("docs",docs);
-        model.addAttribute("courseId",courseId);
-        model.addAttribute("post",res);
+        Iterable<Document> docs = post1.getDocuments();
+        model.addAttribute("docs", docs);
+        model.addAttribute("courseId", courseId);
+        model.addAttribute("post", res);
         return "post-details";
     }
-    public void uploadFile(MultipartFile multipartFile,Post post) throws IOException
-    {
-        String fileName= StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        Document document= new Document();
+
+    public void uploadFile(MultipartFile multipartFile, Post post) throws IOException {
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Document document = new Document();
         document.setName(fileName);
         document.setContent(multipartFile.getBytes());
         document.setSize(multipartFile.getSize());
@@ -58,33 +57,31 @@ public class PostsController {
         post.addDocument(document);
         docRep.save(document);
     }
+
     @PostMapping("/course/{id}")
-    public String AddPost(@PathVariable(value = "id")long id, @RequestParam String title,
+    public String AddPost(@PathVariable(value = "id") long id, @RequestParam String title,
                           @RequestParam String announce, @RequestParam String post,
                           @RequestParam MultipartFile exampleInputFile,
                           @RequestParam MultipartFile exampleInputFile1,
                           @RequestParam MultipartFile exampleInputFile2,
                           Model model) throws IOException {
-        Course course =courseRepository.findById(id).get();
-        Post p=new Post();
+        Course course = courseRepository.findById(id).get();
+        Post p = new Post();
         p.setTitle(title);
         p.setAnnounce(announce);
         p.setPost(post);
         course.addPost(p);
         postRepository.save(p);
-        if(!exampleInputFile.isEmpty())
-        {
-            uploadFile(exampleInputFile,p);
+        if (!exampleInputFile.isEmpty()) {
+            uploadFile(exampleInputFile, p);
         }
-        if(!exampleInputFile1.isEmpty())
-        {
-            uploadFile(exampleInputFile1,p);
+        if (!exampleInputFile1.isEmpty()) {
+            uploadFile(exampleInputFile1, p);
         }
-        if(!exampleInputFile2.isEmpty())
-        {
-            uploadFile(exampleInputFile2,p);
+        if (!exampleInputFile2.isEmpty()) {
+            uploadFile(exampleInputFile2, p);
         }
 
-        return "redirect:/coursePage/"+course.getId();
+        return "redirect:/coursePage/" + course.getId();
     }
 }
