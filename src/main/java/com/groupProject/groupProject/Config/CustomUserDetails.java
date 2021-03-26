@@ -1,6 +1,8 @@
 package com.groupProject.groupProject.Config;
 
-import com.groupProject.groupProject.model.User;
+import com.groupProject.groupProject.model.*;
+import com.groupProject.groupProject.repo.CoursesAndUsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,11 +16,11 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 
-    public static CustomUserDetails fromUserEntityToCustomUserDetails(User userEntity) {
+    public static CustomUserDetails fromUserEntityToCustomUserDetails(User userEntity, Role role) {
         CustomUserDetails c = new CustomUserDetails();
         c.login = userEntity.getEmail();
         c.password = userEntity.getPassword();
-        //c.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(userEntity.getRoleEntity().getName()));
+        c.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
         return c;
     }
 

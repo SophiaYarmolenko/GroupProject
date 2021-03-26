@@ -39,6 +39,16 @@ public class User {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Role> roles = new ArrayList<>();
 
+
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getUsers().add(this);
+    }
+
+    public void removeRole(Role role) {
+        roles.remove(role);
+        role.getUsers().remove(this);
+    }
     public void addCourse(Course course) {
         courses.add(course);
         course.getUsers().add(this);
@@ -50,6 +60,7 @@ public class User {
     }
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Document> documents = new ArrayList<>();
+
 
 
     public void removeDocument(Document document) {
@@ -71,5 +82,7 @@ public class User {
     public void addComment(Comment comment) {
         comments.add( comment );
         comment.setUser( this );
+
     }
+
 }

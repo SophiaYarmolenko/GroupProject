@@ -21,14 +21,19 @@ public class Course
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses",cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Role> roles = new ArrayList<>();
 
     public Course(String name) {
         this.name = name;
     }
+
     @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
+
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Document> documents = new ArrayList<>();
 
@@ -36,6 +41,18 @@ public class Course
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
     //Getters and setters are omitted for brevity
+
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getCourses().add(this);
+    }
+
+    public void removeRole(Role role) {
+        roles.remove(role);
+        role.getCourses().remove(this);
+    }
+
+
     public void addPost(Post post) {
         posts.add( post );
         post.setCourses( this );

@@ -1,11 +1,8 @@
 package com.groupProject.groupProject.controlles;
 
-import com.groupProject.groupProject.model.Course;
-import com.groupProject.groupProject.model.Post;
-import com.groupProject.groupProject.model.User;
-import com.groupProject.groupProject.repo.CourseRepository;
-import com.groupProject.groupProject.repo.PostRepository;
-import com.groupProject.groupProject.repo.UserRepository;
+import com.groupProject.groupProject.Config.JwtProvider;
+import com.groupProject.groupProject.model.*;
+import com.groupProject.groupProject.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +17,17 @@ public class AddCourseController
 {
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
-    private PostRepository postRepository;
+    private RoleRepository roleRepository;
+    @Autowired
+    private CoursesAndUsersRepository coursesAndUsersRepository;
+    @Autowired
+    private CoursesAndRolesRepository coursesAndRolesRepository;
+    @Autowired
+    private JwtProvider jwtProvider;
+
 
     @GetMapping("*/userMain/{userId}/createCourse")
     public String courseCreate
@@ -51,10 +54,26 @@ public class AddCourseController
             )
     {
         Course course = new Course(name);
+        Role role=roleRepository.findByName("ROLE_ADMIN");
         User user = userRepository.findById(userId).get();
         courseRepository.save(course);
+        user.addCourse(course);
+        user.addRole(role);
+        course.addRole(role);
+        courseRepository.save(course);
+        userRepository.save(user);
+        CoursesAndUsers coursesAndUsers= new CoursesAndUsers();
+        coursesAndUsers.setUserId(userId);
+        coursesAndUsers.setCourseId(course.getId());;
+        CoursesAndRoles coursesAndRoles=new CoursesAndRoles();
+        coursesAndRoles.setCourseId(course.getId());
+        coursesAndRoles.setRoleId(role.getId());
+        coursesAndUsersRepository.save(coursesAndUsers);
+        coursesAndRoles.addCoursesAndUsers(coursesAndUsers);
+        coursesAndRolesRepository.save(coursesAndRoles);
+        coursesAndUsersRepository.save(coursesAndUsers);
 
-
-        return "redirect:/coursePage/"+course.getId();
+        String token = jwtProvider.generateToken(user.getEmail(),course.getId());
+        return "redirect:/coursePage/"+course.getId()+"?token="+token;
     }
 }

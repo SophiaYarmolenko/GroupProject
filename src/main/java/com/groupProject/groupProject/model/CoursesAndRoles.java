@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "courses_roles")
+@Table(name = "roles_courses")
 @NoArgsConstructor
 @AllArgsConstructor
 public class CoursesAndRoles {
