@@ -14,7 +14,6 @@
             margin: auto;
             width: 1136px;
             padding: 10px;
-            height: 400px;
         }
     </style>
 </head>
@@ -23,18 +22,23 @@
         th:insert="header :: header">
 </header>
 <br>
-<div th:each="el :${post}" class="card text-white bg-dark mb-3" id="center">
-    <h1 class="display-3" th:text="${el.title}"/>
-    <p class="lead" th:text="${el.announce}"/>
-    <p class="lead" th:text="${el.post}"/>
-    <hr class="my-4">
-    <p class="lead">
-        <a class="btn btn-secondary" th:href="'/course/'+${courseId}+'/post/'+${postId}+'/edit'" role="button">Edit</a>
-    </p>
+<div class="card text-white bg-dark mb-3" id="center">
+    <h1>Edit post</h1>
+    <form th:each="el :${post}" th:action="'/course/'+${courseId}+'/post/'+${postId}+'/edit'" method="post" >
+        <input type="text" th:value="${el.title}" name="title" placeholder="Enter title" class="form-control"><br>
+        <input type="text"  th:value="${el.announce}" name="announce" placeholder="Enter announce" class="form-control"><br>
+        <textarea name="post" placeholder="Enter post text" class="form-control" th:text="${el.post}"></textarea><br>
+        <hr class="my-4">
+        <p class="lead">
+            <button class="btn btn-secondary" type="submit" >Edit</button>
+        </p>
+    </form>
     <form th:action="'/course/'+${courseId}+'/post/'+${postId}+'/remove/post'" method="post">
         <button class="btn btn-warning" type="submit">Delete</button>
     </form>
+
 </div>
+
 <div   class="container-fluid text-center">
     <div class="row border rounded m-3 p-3">
         <th:block th:each="doc: ${docs}">
@@ -51,21 +55,9 @@
             </div>
         </th:block>
     </div>
-    </div>
+</div>
 
-<form th:action="'/course/'+${courseId}+'/post/'+${postId} +'/upload/materials'" method="post" enctype="multipart/form-data">
-    <div class="container-fluid text-center">
-    <div class="border rounded m-3 ">
-        <h2>Upload Your Files:</h2>
-        <p>
-            <input type="file" name="document " required/>
-        </p>
-        <p>
-            <input type="submit" class="btn btn-secondary" value="Upload"/>
-        </p>
-    </div>
-    </div>
-</form>
+
 <div
         th:insert="footer :: footer">
 </div>

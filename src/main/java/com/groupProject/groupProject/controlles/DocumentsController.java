@@ -55,5 +55,15 @@ public class DocumentsController {
         ra.addFlashAttribute("message","The file has been upload successfuly ");
         return "redirect:/course/"+id+"/materials";
     }
+    @PostMapping("/course/{courseId}/remove/{docId}")
+    public String CourseMaterialDelete(@PathVariable(value = "courseId")long courseId,
+                                       @PathVariable(value = "docId")long docId,Model model)
+    {
+        Course course=courseRepository.findById(courseId).get();
+        Document doc= docRep.findById(docId).get();
+        course.removeDocument(doc);
+        docRep.deleteById(docId);
+        return "redirect:/course/"+courseId+"/materials";
+    }
 
 }

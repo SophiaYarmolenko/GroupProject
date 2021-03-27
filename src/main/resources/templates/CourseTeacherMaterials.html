@@ -29,7 +29,7 @@
                 <div>
                     [[${doc.name}]]
                 </div>
-                <form th:action="'/course/'+${doc.getId()} +'/remove/materials'" method="post">
+                <form th:action="'/course/'+${courseId}+'/remove/'+${doc.id} " method="post">
                     <button class="btn btn-secondary"   type="submit">Delete</button>
                 </form>
             </div>

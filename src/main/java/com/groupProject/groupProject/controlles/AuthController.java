@@ -19,8 +19,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtProvider jwtProvider;
 
     @RequestMapping(value="/register", method=RequestMethod.GET)
     public ModelAndView registration (@ModelAttribute("request")  RegistrationRequest request) {
@@ -63,7 +61,6 @@ public class AuthController {
         {
             return new ModelAndView("errorpage","message", "There are no account for that username/email  exists.");
         }
-        String token = jwtProvider.generateToken(u.getEmail());
         return new ModelAndView("redirect:smartCourse/userMain/" + u.getId(), "user",u);
 
     }

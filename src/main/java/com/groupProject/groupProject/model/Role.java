@@ -21,9 +21,9 @@ public class Role {
     @Column
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL)
     private List<Course> courses = new ArrayList<>();
 }
